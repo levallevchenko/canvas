@@ -6,8 +6,6 @@ canvas.height = window.innerHeight;
 
 const particles = [];
 
-console.log(ctx);
-
 window.addEventListener("resize", function () {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -18,19 +16,31 @@ const mouse = {
   y: undefined,
 };
 
+canvas.addEventListener("click", function (event) {
+  mouse.x = event.x;
+  mouse.y = event.y;
+  for (let i = 0; i < 10; i++) {
+    particles.push(new Particle());
+  }
+});
+
 canvas.addEventListener("mousemove", function (event) {
   mouse.x = event.x;
   mouse.y = event.y;
+
+  for (let i = 0; i < 2; i++) {
+    particles.push(new Particle());
+  }
   console.log(mouse.x, mouse.y);
 });
 
 class Particle {
   constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    // this.x = mouse.x;
-    // this.y = mouse.y;
-    this.size = Math.random() * 25 + 1;
+    // this.x = Math.random() * canvas.width;
+    // this.y = Math.random() * canvas.height;
+    this.x = mouse.x;
+    this.y = mouse.y;
+    this.size = Math.random() * 15 + 1;
     this.speedX = Math.random() * 3 - 1.5;
     this.speedY = Math.random() * 3 - 1.5;
   }
@@ -43,19 +53,19 @@ class Particle {
   }
 
   draw() {
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "white";
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
 
-const init = () => {
-  for (let i = 0; i < 1000; i++) {
-    particles.push(new Particle());
-  }
-};
-init();
+// const init = () => {
+//   for (let i = 0; i < 1000; i++) {
+//     particles.push(new Particle());
+//   }
+// };
+// init();
 
 const handleParticles = () => {
   for (let i = 0; i < particles.length; i++) {
